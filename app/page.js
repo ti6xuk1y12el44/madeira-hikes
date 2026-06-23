@@ -1,65 +1,119 @@
-import Image from "next/image";
+import { trails } from './data/trails'
+
+const difficultyColor = {
+  Easy: 'bg-green-100 text-green-700',
+  Moderate: 'bg-amber-100 text-amber-700',
+  Hard: 'bg-stone-900 text-white',
+}
 
 export default function Home() {
+  const popular = trails.slice(0, 3)
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main className="bg-white text-stone-900">
+
+      {/* navbar */}
+      <nav className="flex items-center justify-between px-6 md:px-12 py-5 border-b border-stone-100 sticky top-0 bg-white/90 backdrop-blur z-50">
+        <span className="font-black text-xl leading-none tracking-tight">MADEIRA<br/>HIKES</span>
+        <div className="hidden md:flex gap-8 font-medium">
+          <a href="/" className="hover:text-stone-500">Discover</a>
+          <a href="/trails" className="hover:text-stone-500">Trails</a>
+          <a href="/guides" className="hover:text-stone-500">Guides</a>
+          <a href="/weather" className="hover:text-stone-500">Weather</a>
+          <a href="/permits" className="hover:text-stone-500">Permits</a>
+        </div>
+        <span className="text-sm text-stone-500">EN</span>
+      </nav>
+
+      {/* hero */}
+      <section className="relative h-[70vh] flex items-end overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1591017403286-fd8493524e1e?w=1600&q=80"
+          alt="Madeira mountains"
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        <div className="relative px-6 md:px-12 pb-16 max-w-4xl">
+          <p className="text-amber-300 font-semibold uppercase tracking-widest text-sm">Discover Madeira on foot</p>
+          <h1 className="text-white text-5xl md:text-7xl font-black leading-tight mt-3">
+            Every trail. Every levada. One island.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-stone-200 text-lg mt-4 max-w-xl">
+            Plan your hike, book your permit and explore the wild beauty of Madeira — from misty peaks to hidden waterfalls.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+          <a href="/trails" className="inline-block mt-6 bg-white text-stone-900 px-8 py-4 rounded-full font-semibold hover:bg-stone-100">
+            Explore trails →
           </a>
         </div>
-      </main>
-    </div>
-  );
+      </section>
+
+      {/* weather */}
+      <section className="px-6 md:px-12 -mt-8 relative z-10 max-w-5xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-xl border border-stone-100 px-8 py-6 flex items-center justify-between">
+          <div>
+            <p className="font-bold text-lg">Funchal</p>
+            <p className="text-stone-500 text-sm">Partly cloudy</p>
+          </div>
+          <p className="text-4xl font-black">20°C</p>
+          <span className="text-xs font-semibold border border-stone-200 rounded-full px-3 py-1">⚡ Live</span>
+        </div>
+      </section>
+
+      {/* popular trails */}
+      <section className="px-6 md:px-12 max-w-6xl mx-auto mt-20">
+        <div className="flex items-end justify-between mb-8">
+          <h2 className="text-3xl font-black">Popular trails</h2>
+          <a href="/trails" className="text-stone-500 font-medium hover:text-stone-900">See all →</a>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {popular.map(trail => (
+            <a key={trail.slug} href={'/trails/' + trail.slug} className="group rounded-3xl overflow-hidden border border-stone-100 hover:shadow-xl transition">
+              <div className="h-56 overflow-hidden">
+                <img src={trail.image} alt={trail.name} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              </div>
+              <div className="p-5">
+                <div className="flex items-start justify-between gap-2">
+                  <h3 className="font-bold text-lg leading-snug">{trail.code} – {trail.name}</h3>
+                  <span className={'text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap ' + difficultyColor[trail.difficulty]}>
+                    {trail.difficulty}
+                  </span>
+                </div>
+                <div className="flex gap-4 text-sm text-stone-500 mt-3">
+                  <span>⛰ {trail.distance}</span>
+                  <span>🕑 {trail.duration}</span>
+                  <span>↗ {trail.elevation}</span>
+                </div>
+                <p className="font-bold text-lg mt-3">€{trail.price}<span className="text-stone-400 text-sm font-normal">/p</span></p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* cta banner */}
+      <section className="px-6 md:px-12 max-w-6xl mx-auto mt-20">
+        <div className="relative rounded-3xl overflow-hidden h-72 flex items-center">
+          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&q=80" alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-black/50" />
+          <div className="relative px-8 md:px-14 max-w-xl">
+            <h2 className="text-white text-3xl md:text-4xl font-black">Need a permit?</h2>
+            <p className="text-stone-200 mt-3">Some trails require an official permit. We'll guide you through booking it on the SIMplifica portal.</p>
+            <a href="/permits" className="inline-block mt-5 bg-white text-stone-900 px-6 py-3 rounded-full font-semibold hover:bg-stone-100">View permits</a>
+          </div>
+        </div>
+      </section>
+
+      {/* footer */}
+      <footer className="px-6 md:px-12 max-w-6xl mx-auto mt-24 py-10 border-t border-stone-100 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-500 text-sm">
+        <p className="font-black text-stone-900">The best way to explore Madeira on foot</p>
+        <div className="flex gap-6">
+          <a href="/trails" className="hover:text-stone-900">Trails</a>
+          <a href="/weather" className="hover:text-stone-900">Weather</a>
+          <a href="/permits" className="hover:text-stone-900">Permits</a>
+        </div>
+      </footer>
+
+    </main>
+  )
 }
