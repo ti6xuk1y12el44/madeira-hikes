@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Madeira Hikes
 
-## Getting Started
+A trail discovery and permit-booking prototype for Madeira's official PR hiking trails. Users can browse trails, view detailed information with an interactive map and photo gallery, and get redirected to the official SIMplifica portal to book their permit.
 
-First, run the development server:
+> Prototype built as a proof of concept. Data and images are illustrative.
 
-```bash
+## Features
+
+- **Trail discovery** — homepage with featured trails pulled live from the database
+- **Trail detail pages** — full info (distance, duration, elevation, difficulty), photo gallery, interactive map, and "what to bring" checklist
+- **Permit booking** — links out to the official SIMplifica government portal (no payments handled on-site)
+- **Live weather** — Funchal conditions (planned: full Open-Meteo integration)
+- **Smart navbar** — transparent over the hero, solid white on scroll
+- **Scroll animations** — sections fade in as they enter the viewport
+
+## Tech stack
+
+| Layer | Choice |
+|-------|--------|
+| Framework | Next.js (App Router) |
+| Styling | Tailwind CSS |
+| Database | Supabase (PostgreSQL) |
+| Maps | Leaflet + OpenStreetMap |
+| Hosting | Vercel (planned) |
+
+## Getting started
+
+### Prerequisites
+- Node.js installed
+- A Supabase project
+
+### Setup
+
+1. Clone the repository and install dependencies:
+
+npm install
+
+2. Create a `.env.local` file in the project root:
+
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_publishable_key
+
+3. Run the development server:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Database
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The app reads from a single `trails` table in Supabase. Row Level Security (RLS) is enabled so the public can only **read** trails — no writes are possible through the public key.
 
-## Learn More
+Main fields: `slug`, `code`, `name`, `difficulty`, `distance`, `duration`, `elevation`, `price_eur`, `image_url`, `gallery`, `description`, `start_point`, `end_point`, `address`, `latitude`, `longitude`.
 
-To learn more about Next.js, take a look at the following resources:
+## Security notes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- RLS enabled on the `trails` table (read-only for the public)
+- No payment or personal data is handled — bookings redirect to the official SIMplifica portal
+- No API keys with write access are exposed in the frontend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Roadmap
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Full trails listing page with difficulty filters
+- Live weather page (Open-Meteo)
+- Guides section
+- Move images to Supabase storage
+- Deploy to Vercel
