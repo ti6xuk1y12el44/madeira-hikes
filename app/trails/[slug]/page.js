@@ -1,6 +1,7 @@
 import { supabase } from '../../lib/supabase'
 import Navbar from '../../components/Navbar'
 import Gallery from '../../components/Gallery'
+import TrailMap from '../../components/TrailMap'
 
 const difficultyColor = {
   Easy: 'bg-green-100 text-green-700',
@@ -71,6 +72,11 @@ export default async function TrailPage({ params }) {
           <div className="bg-stone-50 rounded-2xl p-6 mt-8">
             <h3 className="font-bold text-lg">How to get there</h3>
             <p className="text-stone-600 mt-2">📍 {trail.address}</p>
+
+            <div className="mt-4">
+              <TrailMap latitude={trail.latitude} longitude={trail.longitude} name={trail.name} />
+            </div>
+
             <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-4 bg-stone-900 text-white px-5 py-2 rounded-full font-semibold">Google Maps</a>
             <p className="text-stone-400 text-sm mt-3">Parking available at the trailhead (free)</p>
           </div>
