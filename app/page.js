@@ -1,6 +1,7 @@
 import { supabase } from './lib/supabase'
 import FadeIn from './components/FadeIn'
 import Navbar from './components/Navbar'
+import WeatherWidget from './components/WeatherWidget'
 
 const difficultyColor = {
   Easy: 'bg-green-100 text-green-700',
@@ -25,7 +26,7 @@ export default async function Home() {
         <img src="https://images.unsplash.com/photo-1591017403286-fd8493524e1e?w=1600&q=80" alt="Madeira mountains" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         <div className="relative px-6 md:px-12 pb-16 max-w-4xl">
-          <p className="text-amber-300 font-semibold uppercase tracking-widest text-sm">Discover Madeira on foot</p>
+          <p className="text-white font-semibold uppercase tracking-widest text-sm">Discover Madeira on foot</p>
           <h1 className="text-white text-5xl md:text-7xl font-black leading-tight mt-3">Every trail. Every levada. One island.</h1>
           <p className="text-stone-200 text-lg mt-4 max-w-xl">Plan your hike, book your permit and explore the wild beauty of Madeira — from misty peaks to hidden waterfalls.</p>
           <a href="/trails" className="inline-block mt-6 bg-white text-stone-900 px-8 py-4 rounded-full font-semibold hover:bg-stone-100">Explore trails →</a>
@@ -33,14 +34,7 @@ export default async function Home() {
       </section>
 
       <section className="px-6 md:px-12 -mt-8 relative z-10 max-w-5xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-xl border border-stone-100 px-8 py-6 flex items-center justify-between">
-          <div>
-            <p className="font-bold text-lg">Funchal</p>
-            <p className="text-stone-500 text-sm">Partly cloudy</p>
-          </div>
-          <p className="text-4xl font-black">20°C</p>
-          <span className="text-xs font-semibold border border-stone-200 rounded-full px-3 py-1">⚡ Live</span>
-        </div>
+        <WeatherWidget />
       </section>
 
       <FadeIn>
