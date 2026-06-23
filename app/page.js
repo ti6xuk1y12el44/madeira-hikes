@@ -12,9 +12,6 @@ const { data: trails, error } = await supabase
     .select('*')
     .order('created_at')
 
-  console.log('TRAILS:', trails)
-  console.log('ERROR:', error)
-
   const popular = trails?.slice(0, 3) || []
 
   return (
