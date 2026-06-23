@@ -31,7 +31,7 @@ export default function TrailsPage() {
   return (
     <main className="bg-white text-stone-900 min-h-screen">
 
-      <Navbar />
+      <Navbar solid={true} />
 
       <section className="px-6 md:px-12 max-w-6xl mx-auto pt-32">
         <h1 className="text-4xl md:text-5xl font-black">Hiking trails</h1>

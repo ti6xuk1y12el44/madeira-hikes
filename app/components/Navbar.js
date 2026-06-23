@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-export default function Navbar() {
+export default function Navbar({ solid = false }) {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -13,15 +13,15 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const textColor = scrolled ? 'text-stone-900' : 'text-white'
+  // Se a página é de fundo claro (solid), ou já fizemos scroll, mostra a navbar branca
+  const isSolid = solid || scrolled
+  const textColor = isSolid ? 'text-stone-900' : 'text-white'
 
   return (
     <nav
       className={
         'fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-5 transition-all duration-300 ' +
-        (scrolled
-          ? 'bg-white/95 backdrop-blur shadow-sm'
-          : 'bg-transparent')
+        (isSolid ? 'bg-white/95 backdrop-blur shadow-sm' : 'bg-transparent')
       }
     >
       <a href="/" className={'font-black text-xl leading-none tracking-tight transition-colors ' + textColor}>
