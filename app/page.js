@@ -1,4 +1,4 @@
-import { trails } from './data/trails'
+import { supabase } from './lib/supabase'
 
 const difficultyColor = {
   Easy: 'bg-green-100 text-green-700',
@@ -6,13 +6,20 @@ const difficultyColor = {
   Hard: 'bg-stone-900 text-white',
 }
 
-export default function Home() {
-  const popular = trails.slice(0, 3)
+export default async function Home() {
+const { data: trails, error } = await supabase
+    .from('trails')
+    .select('*')
+    .order('created_at')
+
+  console.log('TRAILS:', trails)
+  console.log('ERROR:', error)
+
+  const popular = trails?.slice(0, 3) || []
 
   return (
     <main className="bg-white text-stone-900">
 
-      {/* navbar */}
       <nav className="flex items-center justify-between px-6 md:px-12 py-5 border-b border-stone-100 sticky top-0 bg-white/90 backdrop-blur z-50">
         <span className="font-black text-xl leading-none tracking-tight">MADEIRA<br/>HIKES</span>
         <div className="hidden md:flex gap-8 font-medium">
@@ -25,7 +32,6 @@ export default function Home() {
         <span className="text-sm text-stone-500">EN</span>
       </nav>
 
-      {/* hero */}
       <section className="relative h-[70vh] flex items-end overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1591017403286-fd8493524e1e?w=1600&q=80"
@@ -47,7 +53,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* weather */}
       <section className="px-6 md:px-12 -mt-8 relative z-10 max-w-5xl mx-auto">
         <div className="bg-white rounded-3xl shadow-xl border border-stone-100 px-8 py-6 flex items-center justify-between">
           <div>
@@ -59,7 +64,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* popular trails */}
       <section className="px-6 md:px-12 max-w-6xl mx-auto mt-20">
         <div className="flex items-end justify-between mb-8">
           <h2 className="text-3xl font-black">Popular trails</h2>
@@ -68,14 +72,14 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {popular.map(trail => (
-            <a key={trail.slug} href={'/trails/' + trail.slug} className="group rounded-3xl overflow-hidden border border-stone-100 hover:shadow-xl transition">
+            <a key={trail.id} href={'/trails/' + trail.slug} className="group rounded-3xl overflow-hidden border border-stone-100 hover:shadow-xl transition">
               <div className="h-56 overflow-hidden">
-                <img src={trail.image} alt={trail.name} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                <img src={trail.image_url} alt={trail.name} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
               </div>
               <div className="p-5">
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="font-bold text-lg leading-snug">{trail.code} – {trail.name}</h3>
-                  <span className={'text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap ' + difficultyColor[trail.difficulty]}>
+                  <span className={'text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap ' + (difficultyColor[trail.difficulty] || 'bg-stone-100 text-stone-700')}>
                     {trail.difficulty}
                   </span>
                 </div>
@@ -84,14 +88,13 @@ export default function Home() {
                   <span>🕑 {trail.duration}</span>
                   <span>↗ {trail.elevation}</span>
                 </div>
-                <p className="font-bold text-lg mt-3">€{trail.price}<span className="text-stone-400 text-sm font-normal">/p</span></p>
+                <p className="font-bold text-lg mt-3">€{trail.price_eur}<span className="text-stone-400 text-sm font-normal">/p</span></p>
               </div>
             </a>
           ))}
         </div>
       </section>
 
-      {/* cta banner */}
       <section className="px-6 md:px-12 max-w-6xl mx-auto mt-20">
         <div className="relative rounded-3xl overflow-hidden h-72 flex items-center">
           <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&q=80" alt="" className="absolute inset-0 w-full h-full object-cover" />
@@ -104,7 +107,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* footer */}
       <footer className="px-6 md:px-12 max-w-6xl mx-auto mt-24 py-10 border-t border-stone-100 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-500 text-sm">
         <p className="font-black text-stone-900">The best way to explore Madeira on foot</p>
         <div className="flex gap-6">
