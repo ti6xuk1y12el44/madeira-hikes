@@ -1,4 +1,6 @@
 import { supabase } from '../../lib/supabase'
+import Navbar from '../../components/Navbar'
+import Gallery from '../../components/Gallery'
 
 const difficultyColor = {
   Easy: 'bg-green-100 text-green-700',
@@ -29,14 +31,7 @@ export default async function TrailPage({ params }) {
   return (
     <main className="bg-white text-stone-900">
 
-      <nav className="flex items-center justify-between px-6 md:px-12 py-5 border-b border-stone-100">
-        <a href="/" className="font-black text-xl leading-none tracking-tight">MADEIRA<br/>HIKES</a>
-        <div className="hidden md:flex gap-8 font-medium">
-          <a href="/trails" className="hover:text-stone-500">Trails</a>
-          <a href="/weather" className="hover:text-stone-500">Weather</a>
-          <a href="/permits" className="hover:text-stone-500">Permits</a>
-        </div>
-      </nav>
+      <Navbar />
 
       <section className="relative h-[55vh] flex items-end overflow-hidden">
         <img src={trail.image_url} alt={trail.name} className="absolute inset-0 w-full h-full object-cover" />
@@ -57,6 +52,12 @@ export default async function TrailPage({ params }) {
         <div className="lg:col-span-2">
           <h2 className="text-2xl font-black">About the trail</h2>
           <p className="text-stone-600 mt-3 leading-relaxed text-lg">{trail.description}</p>
+
+          {trail.gallery && trail.gallery.length > 0 && (
+            <div className="mt-8">
+              <Gallery images={trail.gallery} alt={trail.name} />
+            </div>
+          )}
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-8">
             <InfoBox label="Distance" value={trail.distance} />
@@ -85,7 +86,7 @@ export default async function TrailPage({ params }) {
         </div>
 
         <div>
-          <div className="border border-stone-200 rounded-3xl p-6 sticky top-6">
+          <div className="border border-stone-200 rounded-3xl p-6 sticky top-24">
             <h3 className="font-black text-xl">Book Permit</h3>
             <p className="text-3xl font-black mt-2">€{trail.price_eur} <span className="text-stone-400 text-base font-normal">/ per person</span></p>
             <a href={simplificaUrl} target="_blank" rel="noopener noreferrer" className="block text-center mt-6 bg-stone-900 text-white py-4 rounded-full font-semibold hover:bg-stone-800">Reserve on SIMplifica ↗</a>

@@ -1,4 +1,6 @@
 import { supabase } from './lib/supabase'
+import FadeIn from './components/FadeIn'
+import Navbar from './components/Navbar'
 
 const difficultyColor = {
   Easy: 'bg-green-100 text-green-700',
@@ -7,7 +9,7 @@ const difficultyColor = {
 }
 
 export default async function Home() {
-const { data: trails, error } = await supabase
+  const { data: trails } = await supabase
     .from('trails')
     .select('*')
     .order('created_at')
@@ -17,36 +19,16 @@ const { data: trails, error } = await supabase
   return (
     <main className="bg-white text-stone-900">
 
-      <nav className="flex items-center justify-between px-6 md:px-12 py-5 border-b border-stone-100 sticky top-0 bg-white/90 backdrop-blur z-50">
-        <span className="font-black text-xl leading-none tracking-tight">MADEIRA<br/>HIKES</span>
-        <div className="hidden md:flex gap-8 font-medium">
-          <a href="/" className="hover:text-stone-500">Discover</a>
-          <a href="/trails" className="hover:text-stone-500">Trails</a>
-          <a href="/guides" className="hover:text-stone-500">Guides</a>
-          <a href="/weather" className="hover:text-stone-500">Weather</a>
-          <a href="/permits" className="hover:text-stone-500">Permits</a>
-        </div>
-        <span className="text-sm text-stone-500">EN</span>
-      </nav>
+      <Navbar />
 
       <section className="relative h-[70vh] flex items-end overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1591017403286-fd8493524e1e?w=1600&q=80"
-          alt="Madeira mountains"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <img src="https://images.unsplash.com/photo-1591017403286-fd8493524e1e?w=1600&q=80" alt="Madeira mountains" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         <div className="relative px-6 md:px-12 pb-16 max-w-4xl">
           <p className="text-amber-300 font-semibold uppercase tracking-widest text-sm">Discover Madeira on foot</p>
-          <h1 className="text-white text-5xl md:text-7xl font-black leading-tight mt-3">
-            Every trail. Every levada. One island.
-          </h1>
-          <p className="text-stone-200 text-lg mt-4 max-w-xl">
-            Plan your hike, book your permit and explore the wild beauty of Madeira — from misty peaks to hidden waterfalls.
-          </p>
-          <a href="/trails" className="inline-block mt-6 bg-white text-stone-900 px-8 py-4 rounded-full font-semibold hover:bg-stone-100">
-            Explore trails →
-          </a>
+          <h1 className="text-white text-5xl md:text-7xl font-black leading-tight mt-3">Every trail. Every levada. One island.</h1>
+          <p className="text-stone-200 text-lg mt-4 max-w-xl">Plan your hike, book your permit and explore the wild beauty of Madeira — from misty peaks to hidden waterfalls.</p>
+          <a href="/trails" className="inline-block mt-6 bg-white text-stone-900 px-8 py-4 rounded-full font-semibold hover:bg-stone-100">Explore trails →</a>
         </div>
       </section>
 
@@ -61,6 +43,7 @@ const { data: trails, error } = await supabase
         </div>
       </section>
 
+      <FadeIn>
       <section className="px-6 md:px-12 max-w-6xl mx-auto mt-20">
         <div className="flex items-end justify-between mb-8">
           <h2 className="text-3xl font-black">Popular trails</h2>
@@ -76,9 +59,7 @@ const { data: trails, error } = await supabase
               <div className="p-5">
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="font-bold text-lg leading-snug">{trail.code} – {trail.name}</h3>
-                  <span className={'text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap ' + (difficultyColor[trail.difficulty] || 'bg-stone-100 text-stone-700')}>
-                    {trail.difficulty}
-                  </span>
+                  <span className={'text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap ' + (difficultyColor[trail.difficulty] || 'bg-stone-100 text-stone-700')}>{trail.difficulty}</span>
                 </div>
                 <div className="flex gap-4 text-sm text-stone-500 mt-3">
                   <span>⛰ {trail.distance}</span>
@@ -91,7 +72,9 @@ const { data: trails, error } = await supabase
           ))}
         </div>
       </section>
+      </FadeIn>
 
+      <FadeIn delay={100}>
       <section className="px-6 md:px-12 max-w-6xl mx-auto mt-20">
         <div className="relative rounded-3xl overflow-hidden h-72 flex items-center">
           <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&q=80" alt="" className="absolute inset-0 w-full h-full object-cover" />
@@ -103,6 +86,7 @@ const { data: trails, error } = await supabase
           </div>
         </div>
       </section>
+      </FadeIn>
 
       <footer className="px-6 md:px-12 max-w-6xl mx-auto mt-24 py-10 border-t border-stone-100 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-500 text-sm">
         <p className="font-black text-stone-900">The best way to explore Madeira on foot</p>
