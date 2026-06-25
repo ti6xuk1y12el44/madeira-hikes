@@ -12,7 +12,6 @@ const statusConfig = {
 
 const filters = ['All', 'Open', 'Partial', 'Closed']
 
-// Transforma uma data em "X minutes ago"
 function timeAgo(dateStr) {
   if (!dateStr) return 'unknown'
   const diff = Date.now() - new Date(dateStr).getTime()
@@ -40,13 +39,8 @@ export default function StatusPage() {
     const { data } = await supabase.from('trails').select('*').order('code')
     setTrails(data || [])
 
-    // A última atualização = a mais recente entre todos os trilhos
     if (data && data.length) {
-      const latest = data
-        .map(t => t.status_updated_at)
-        .filter(Boolean)
-        .sort()
-        .pop()
+      const latest = data.map(t => t.status_updated_at).filter(Boolean).sort().pop()
       setLastUpdated(latest)
     }
 
@@ -93,6 +87,26 @@ export default function StatusPage() {
             {refreshing ? 'Refreshing...' : '↻ Refresh'}
           </button>
         </div>
+
+        {/* BANNER DE AVISO */}
+        <div className="mt-8 bg-amber-50 border border-amber-200 rounded-2xl p-5 flex items-start gap-4">
+          <span className="text-2xl">⚠️</span>
+          <div>
+            <p className="font-bold text-amber-800 text-sm uppercase tracking-wide">PR1 Update · 1 June 2026</p>
+            <p className="text-stone-800 font-semibold mt-1">Full route opens daily from 26 June — bookings available now on SIMplifica</p>
+            <p className="text-stone-600 text-sm mt-1">Temporary closures: 14–17 Sep & 21–22 Sep. One-way direction (Areeiro → Ruivo) maintained.</p>
+          </div>
+        </div>
+
+        {/* SECÇÃO COMO RESERVAR */}
+        <a href="https://simplifica.madeira.gov.pt" target="_blank" rel="noopener noreferrer" className="mt-4 bg-emerald-50 border border-emerald-200 rounded-2xl p-5 flex items-center gap-4 hover:bg-emerald-100 transition block">
+          <span className="text-2xl">📅</span>
+          <div className="flex-1">
+            <p className="font-bold text-emerald-800 text-sm uppercase tracking-wide">Need to book a slot?</p>
+            <p className="text-stone-800 font-semibold mt-1">How to reserve your PR trail permit — book on the official SIMplifica portal</p>
+          </div>
+          <span className="text-emerald-700 text-xl">→</span>
+        </a>
 
         {/* Contadores */}
         <div className="grid grid-cols-3 gap-4 mt-8 max-w-lg">
@@ -163,6 +177,17 @@ export default function StatusPage() {
             })}
           </div>
         )}
+
+        {/* ALWAYS TRAIL-READY / IFCN */}
+        <div className="mt-16 bg-stone-900 text-white rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center gap-8">
+          <div className="flex-1">
+            <h2 className="text-2xl md:text-3xl font-black">Always trail-ready</h2>
+            <p className="text-stone-300 mt-3 max-w-lg">We show the latest trail status so you always know before you head out. For official notices, check the IFCN website directly.</p>
+            <a href="https://ifcn.madeira.gov.pt" target="_blank" rel="noopener noreferrer" className="inline-block mt-5 bg-white text-stone-900 px-6 py-3 rounded-full font-semibold hover:bg-stone-100 transition">
+              Official IFCN Website →
+            </a>
+          </div>
+        </div>
 
       </section>
     </main>
