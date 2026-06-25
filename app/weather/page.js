@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
+
 
 // Coordenadas do Funchal
 const FUNCHAL = { lat: 32.6669, lon: -16.9241 }
@@ -86,6 +88,7 @@ export default function WeatherPage() {
           </>
         )}
       </section>
+      <Footer />
     </main>
   )
 }

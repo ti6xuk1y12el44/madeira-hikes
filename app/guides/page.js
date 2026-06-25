@@ -1,4 +1,6 @@
 import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
+
 
 const guides = [
   {
@@ -60,6 +62,7 @@ export default function GuidesPage() {
           <a href="/trails" className="inline-block mt-5 bg-stone-900 text-white px-8 py-3 rounded-full font-semibold hover:bg-stone-800">View all trails</a>
         </div>
       </section>
+      <Footer />
     </main>
   )
 }

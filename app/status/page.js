@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 
 const statusConfig = {
   open: { label: 'Open', dot: 'bg-green-500', badge: 'bg-green-100 text-green-700', count: 'text-green-600' },
@@ -88,7 +89,6 @@ export default function StatusPage() {
           </button>
         </div>
 
-        {/* BANNER DE AVISO */}
         <div className="mt-8 bg-amber-50 border border-amber-200 rounded-2xl p-5 flex items-start gap-4">
           <span className="text-2xl">⚠️</span>
           <div>
@@ -98,7 +98,6 @@ export default function StatusPage() {
           </div>
         </div>
 
-        {/* SECÇÃO COMO RESERVAR */}
         <a href="https://simplifica.madeira.gov.pt" target="_blank" rel="noopener noreferrer" className="mt-4 bg-emerald-50 border border-emerald-200 rounded-2xl p-5 flex items-center gap-4 hover:bg-emerald-100 transition block">
           <span className="text-2xl">📅</span>
           <div className="flex-1">
@@ -108,7 +107,6 @@ export default function StatusPage() {
           <span className="text-emerald-700 text-xl">→</span>
         </a>
 
-        {/* Contadores */}
         <div className="grid grid-cols-3 gap-4 mt-8 max-w-lg">
           <div className="border border-stone-200 rounded-2xl p-5 text-center">
             <p className={'text-3xl font-black ' + statusConfig.open.count}>{counts.open}</p>
@@ -124,7 +122,6 @@ export default function StatusPage() {
           </div>
         </div>
 
-        {/* Filtros + pesquisa */}
         <div className="flex flex-wrap items-center justify-between gap-4 mt-10">
           <div className="flex gap-2 flex-wrap">
             {filters.map(f => (
@@ -149,7 +146,6 @@ export default function StatusPage() {
           />
         </div>
 
-        {/* Cards */}
         {loading ? (
           <p className="text-stone-400 mt-10">Loading trails...</p>
         ) : filtered.length === 0 ? (
@@ -178,7 +174,6 @@ export default function StatusPage() {
           </div>
         )}
 
-        {/* ALWAYS TRAIL-READY / IFCN */}
         <div className="mt-16 bg-stone-900 text-white rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center gap-8">
           <div className="flex-1">
             <h2 className="text-2xl md:text-3xl font-black">Always trail-ready</h2>
@@ -190,6 +185,7 @@ export default function StatusPage() {
         </div>
 
       </section>
+      <Footer />
     </main>
   )
 }

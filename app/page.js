@@ -1,6 +1,7 @@
 import { supabase } from './lib/supabase'
 import FadeIn from './components/FadeIn'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import WeatherWidget from './components/WeatherWidget'
 
 const difficultyColor = {
@@ -23,7 +24,7 @@ export default async function Home() {
       <Navbar />
 
       <section className="relative h-[70vh] flex items-end overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1591017403286-fd8493524e1e?w=1600&q=80" alt="Madeira mountains" className="absolute inset-0 w-full h-full object-cover" />
+        <img src="/hiking.jpg" alt="Madeira mountains" className="absolute inset-0 w-full h-full object-cover animate-slow-zoom" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         <div className="relative px-6 md:px-12 pb-16 max-w-4xl">
           <p className="text-white font-semibold uppercase tracking-widest text-sm">Discover Madeira on foot</p>
@@ -90,7 +91,7 @@ export default async function Home() {
           <a href="/permits" className="hover:text-stone-900">Permits</a>
         </div>
       </footer>
-
+<Footer />
     </main>
   )
 }

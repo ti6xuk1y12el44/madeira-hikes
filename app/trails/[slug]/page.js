@@ -2,6 +2,7 @@ import { supabase } from '../../lib/supabase'
 import Navbar from '../../components/Navbar'
 import Gallery from '../../components/Gallery'
 import TrailMap from '../../components/TrailMap'
+import Footer from '../../components/Footer'
 
 const difficultyColor = {
   Easy: 'bg-green-100 text-green-700',
@@ -105,7 +106,7 @@ export default async function TrailPage({ params }) {
       <footer className="px-6 md:px-12 max-w-6xl mx-auto mt-24 py-10 border-t border-stone-100 text-stone-500 text-sm">
         <a href="/trails" className="hover:text-stone-900">← Back to all trails</a>
       </footer>
-
+<Footer />
     </main>
   )
 }

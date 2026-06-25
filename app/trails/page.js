@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
+
 
 const difficultyColor = {
   Easy: 'bg-green-100 text-green-700',
@@ -84,7 +86,7 @@ export default function TrailsPage() {
           </div>
         )}
       </section>
-
+<Footer />
     </main>
   )
 }
