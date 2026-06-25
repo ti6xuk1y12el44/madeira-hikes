@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ReportBugButton from "./components/ReportBugButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Madeira Hikes",
-  description: "Madeira Hikes",
+  title: "Madeira Hikes — Trail status, permits and guides",
+  description: "Real-time trail status, permits and guides for Madeira and Porto Santo's official PR hiking trails.",
 };
 
 export default function RootLayout({ children }) {
@@ -22,7 +23,10 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <ReportBugButton />
+      </body>
     </html>
   );
 }
