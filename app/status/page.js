@@ -12,6 +12,7 @@ const statusConfig = {
 }
 
 const filters = ['All', 'Open', 'Partial', 'Closed']
+const islands = ['Madeira', 'Porto Santo']
 
 function timeAgo(dateStr) {
   if (!dateStr) return 'unknown'
@@ -31,6 +32,7 @@ export default function StatusPage() {
   const [refreshing, setRefreshing] = useState(false)
   const [active, setActive] = useState('All')
   const [search, setSearch] = useState('')
+  const [island, setIsland] = useState('Madeira')
   const [lastUpdated, setLastUpdated] = useState(null)
 
   async function load(isRefresh = false) {
@@ -53,13 +55,16 @@ export default function StatusPage() {
     load()
   }, [])
 
+  // Trilhos da ilha selecionada
+  const islandTrails = trails.filter(t => (t.island || 'Madeira') === island)
+
   const counts = {
-    open: trails.filter(t => t.status === 'open').length,
-    partial: trails.filter(t => t.status === 'partial').length,
-    closed: trails.filter(t => t.status === 'closed').length,
+    open: islandTrails.filter(t => t.status === 'open').length,
+    partial: islandTrails.filter(t => t.status === 'partial').length,
+    closed: islandTrails.filter(t => t.status === 'closed').length,
   }
 
-  const filtered = trails.filter(t => {
+  const filtered = islandTrails.filter(t => {
     const matchStatus = active === 'All' || t.status === active.toLowerCase()
     const matchSearch = t.name.toLowerCase().includes(search.toLowerCase()) || (t.code || '').toLowerCase().includes(search.toLowerCase())
     return matchStatus && matchSearch
@@ -89,6 +94,7 @@ export default function StatusPage() {
           </button>
         </div>
 
+        {/* BANNER DE AVISO */}
         <div className="mt-8 bg-amber-50 border border-amber-200 rounded-2xl p-5 flex items-start gap-4">
           <span className="text-2xl">⚠️</span>
           <div>
@@ -98,6 +104,7 @@ export default function StatusPage() {
           </div>
         </div>
 
+        {/* SECÇÃO COMO RESERVAR */}
         <a href="https://simplifica.madeira.gov.pt" target="_blank" rel="noopener noreferrer" className="mt-4 bg-emerald-50 border border-emerald-200 rounded-2xl p-5 flex items-center gap-4 hover:bg-emerald-100 transition block">
           <span className="text-2xl">📅</span>
           <div className="flex-1">
@@ -107,22 +114,41 @@ export default function StatusPage() {
           <span className="text-emerald-700 text-xl">→</span>
         </a>
 
-        <div className="grid grid-cols-3 gap-4 mt-8 max-w-lg">
-          <div className="border border-stone-200 rounded-2xl p-5 text-center">
-            <p className={'text-3xl font-black ' + statusConfig.open.count}>{counts.open}</p>
-            <p className="text-stone-400 text-xs uppercase tracking-wider mt-1">Open</p>
+        {/* TOGGLE ILHA + CONTADORES */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mt-8">
+          <div className="inline-flex bg-stone-100 rounded-full p-1">
+            {islands.map(isl => (
+              <button
+                key={isl}
+                onClick={() => setIsland(isl)}
+                className={
+                  'px-6 py-2 rounded-full font-semibold transition ' +
+                  (island === isl ? 'bg-stone-900 text-white' : 'text-stone-600 hover:text-stone-900')
+                }
+              >
+                {isl}
+              </button>
+            ))}
           </div>
-          <div className="border border-stone-200 rounded-2xl p-5 text-center">
-            <p className={'text-3xl font-black ' + statusConfig.partial.count}>{counts.partial}</p>
-            <p className="text-stone-400 text-xs uppercase tracking-wider mt-1">Partial</p>
-          </div>
-          <div className="border border-stone-200 rounded-2xl p-5 text-center">
-            <p className={'text-3xl font-black ' + statusConfig.closed.count}>{counts.closed}</p>
-            <p className="text-stone-400 text-xs uppercase tracking-wider mt-1">Closed</p>
+
+          <div className="flex gap-3">
+            <div className="border border-stone-200 rounded-2xl px-5 py-3 text-center">
+              <p className={'text-2xl font-black ' + statusConfig.open.count}>{counts.open}</p>
+              <p className="text-stone-400 text-xs uppercase tracking-wider">Open</p>
+            </div>
+            <div className="border border-stone-200 rounded-2xl px-5 py-3 text-center">
+              <p className={'text-2xl font-black ' + statusConfig.partial.count}>{counts.partial}</p>
+              <p className="text-stone-400 text-xs uppercase tracking-wider">Partial</p>
+            </div>
+            <div className="border border-stone-200 rounded-2xl px-5 py-3 text-center">
+              <p className={'text-2xl font-black ' + statusConfig.closed.count}>{counts.closed}</p>
+              <p className="text-stone-400 text-xs uppercase tracking-wider">Closed</p>
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-4 mt-10">
+        {/* Filtros + pesquisa */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mt-8">
           <div className="flex gap-2 flex-wrap">
             {filters.map(f => (
               <button
@@ -146,6 +172,7 @@ export default function StatusPage() {
           />
         </div>
 
+        {/* Cards */}
         {loading ? (
           <p className="text-stone-400 mt-10">Loading trails...</p>
         ) : filtered.length === 0 ? (
@@ -174,6 +201,7 @@ export default function StatusPage() {
           </div>
         )}
 
+        {/* ALWAYS TRAIL-READY / IFCN */}
         <div className="mt-16 bg-stone-900 text-white rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center gap-8">
           <div className="flex-1">
             <h2 className="text-2xl md:text-3xl font-black">Always trail-ready</h2>
