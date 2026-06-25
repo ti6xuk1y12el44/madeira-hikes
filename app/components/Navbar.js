@@ -33,6 +33,7 @@ export default function Navbar({ solid = false }) {
         <a href="/trails" className="hover:opacity-60">Trails</a>
         <a href="/guides" className="hover:opacity-60">Guides</a>
         <a href="/weather" className="hover:opacity-60">Weather</a>
+        <a href="/status" className="hover:opacity-60">Status</a>
         <a href="/permits" className="hover:opacity-60">Permits</a>
       </div>
 
